@@ -21,7 +21,7 @@ export default function Tenders() {
           className='text-white cursor-pointer hover:text-violet-500 transition-all duration-200 ease-in-out'
         />
       </div>
-      {showPopover && <Popover close={() => setShowpopover(false)} />}
+      <Popover close={() => setShowpopover(false)} visible={showPopover} />
       <div className='flex flex-row flex-wrap gap-x-2 gap-y-4'>
         <TenderCard />;
         <TenderCard />;
