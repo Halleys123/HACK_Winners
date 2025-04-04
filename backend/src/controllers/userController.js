@@ -23,6 +23,22 @@ async function createUser(req, res) {
     }
 }
 
+async function createSign(req, res) {
+    try {
+        const user = await UserService.userSign({
+            email: req.body.email,
+            password: req.body.password,
+        });
+
+        SuccessResponse.data = user;
+        return res.status(StatusCodes.CREATED).json(SuccessResponse);
+    } catch (error) {
+        console.log(error);
+        ErrorResponse.error = error;
+        return res.status(StatusCodes.BAD_REQUEST).json(ErrorResponse);
+    }
+}
+
 
 async function allUser(req, res) {
     try {
@@ -87,4 +103,4 @@ async function update(req, res) {
     }
 }
 
-module.exports = { createUser, allUser, getUniqueYears,destroy ,update};
+module.exports = { createUser, allUser, getUniqueYears,destroy ,update,createSign};

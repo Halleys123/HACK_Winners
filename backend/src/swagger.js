@@ -16,6 +16,20 @@ const options = {
         url: ServerConfig.SWAGGER_URL,
       },
     ],
+    components: {
+        securitySchemes: {
+          bearerAuth: {
+            type: "http",
+            scheme: "bearer",
+            bearerFormat: "JWT",
+          },
+        },
+      },
+      security: [
+        {
+          bearerAuth: [],
+        },
+      ],
   },
   apis: ["src/routes/**/*.js"]
 };

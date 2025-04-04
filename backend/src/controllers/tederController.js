@@ -14,7 +14,7 @@ async function createTender(req, res) {
             releaseDate: req.body.releaseDate,
             submissionDeadline: req.body.submissionDeadline,
             status: req.body.status || 'Open',
-            createdBy: req.body.createdBy,
+            createdBy: req.user.id,
             documents: req.body.documents || [],
         });
 

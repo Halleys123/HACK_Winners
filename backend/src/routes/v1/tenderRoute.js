@@ -1,6 +1,7 @@
 const express = require("express");
 const { TenderController } = require("../../controllers");
 const router = express.Router();
+const { AuthRequestMiddleware } = require("../../middlewares");
 
 /**
  * @swagger
@@ -64,6 +65,8 @@ const router = express.Router();
  *   post:
  *     summary: Create a new tender
  *     tags: [Tenders]
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -111,7 +114,7 @@ const router = express.Router();
  *       400:
  *         description: Invalid input or schema
  */
-router.post("/", TenderController.createTender);
+router.post("/",AuthRequestMiddleware.checkAuth, TenderController.createTender);
 
 /**
  * @swagger
@@ -119,6 +122,8 @@ router.post("/", TenderController.createTender);
  *   get:
  *     summary: Get all tenders with optional filters
  *     tags: [Tenders]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: query
  *         name: title
@@ -172,6 +177,6 @@ router.post("/", TenderController.createTender);
  *       400:
  *         description: Bad request or validation error
  */
-router.get("/get", TenderController.allTender);
+router.get("/get", AuthRequestMiddleware.checkAuth,TenderController.allTender);
 
 module.exports = router;

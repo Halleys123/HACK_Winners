@@ -6,7 +6,7 @@ async function createBid(req, res) {
     try {
         const bid = await BidService.bidCreate({
             tenderId: req.body.tenderId,
-            contractorId: req.body.contractorId, 
+            contractorId: req.user.id, 
             bidPrice: req.body.bidPrice,
             documents: req.body.documents || [],
             isApproved: req.body.isApproved ?? false,

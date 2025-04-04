@@ -145,6 +145,56 @@ router.post("/register", UserController.createUser);
  *       400:
  *         description: Bad request or validation error
  */
-router.get("/get", UserController.allUser);
+router.get("/get",AuthRequestMiddleware.checkAuth, UserController.allUser);
+
+/**
+ * @swagger
+ * /api/v1/user/signIn:
+ *   post:
+ *     summary: Sign in a user and get JWT token
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *               - password
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 example: "johndoe@example.com"
+ *               password:
+ *                 type: string
+ *                 example: "securepassword123"
+ *     responses:
+ *       201:
+ *         description: Successfully signed in
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: "User signed in successfully"
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     token:
+ *                       type: string
+ *                       example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+ *                     user:
+ *                       $ref: '#/components/schemas/User'
+ *       400:
+ *         description: Invalid credentials or request body
+ */
+router.post("/signIn",UserController.createSign)
 
 module.exports = router;

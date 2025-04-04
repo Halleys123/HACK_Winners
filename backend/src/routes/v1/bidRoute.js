@@ -41,6 +41,8 @@ const { AuthRequestMiddleware } = require("../../middlewares");
  *   post:
  *     summary: Submit a new bid
  *     tags: [Bids]
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -66,7 +68,7 @@ const { AuthRequestMiddleware } = require("../../middlewares");
  *       400:
  *         description: Invalid input
  */
-router.post("/", BidController.createBid);
+router.post("/",AuthRequestMiddleware.checkAuth, BidController.createBid);
 
 /**
  * @swagger
@@ -74,6 +76,8 @@ router.post("/", BidController.createBid);
  *   get:
  *     summary: Get all bids with optional filters
  *     tags: [Bids]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: query
  *         name: tenderId
@@ -131,6 +135,6 @@ router.post("/", BidController.createBid);
  *       400:
  *         description: Bad request or filter error
  */
-router.get("/get", BidController.allBid);
+router.get("/get",AuthRequestMiddleware.checkAuth, BidController.allBid);
 
 module.exports = router;
