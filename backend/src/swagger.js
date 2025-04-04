@@ -1,6 +1,7 @@
 // swagger.js
 const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
+const { ServerConfig } = require('./config');
 
 const options = {
   definition: {
@@ -12,7 +13,7 @@ const options = {
     },
     servers: [
       {
-        url: "https://hack-winners.onrender.com",
+        url: ServerConfig.SWAGGER_URL,
       },
     ],
   },

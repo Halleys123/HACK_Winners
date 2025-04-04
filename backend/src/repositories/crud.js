@@ -92,6 +92,16 @@ class CrudRepositery {
         return await this.model.findOne(query);
     }
 
+
+    async getAllFiltered(where = {}, options = {}) {
+        try {
+            const response = await this.model.findAll({ where, ...options });
+            return response;
+        } catch (error) {
+            console.error("Error in getAllFiltered:", error);
+            throw error;
+        }
+    }    
 }
 
 module.exports = CrudRepositery;
