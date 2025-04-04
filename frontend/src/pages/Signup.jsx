@@ -29,7 +29,7 @@ export default function Signup() {
           />
           <Dropdown
             className='max-w-md'
-            label='Country'
+            label='User Type'
             options={['Government', 'Contractor', 'Citizen']}
           />
           <button className='w-full h-12 rounded-xl mt-4 bg-white text-black font-redhat text-center cursor-pointer hover:bg-neutral-50'>
