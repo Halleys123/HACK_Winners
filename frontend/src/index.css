@@ -1,5 +1,5 @@
-@import 'tailwindcss';
 @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,300..900;1,300..900&display=swap');
+@import 'tailwindcss';
 
 @theme {
   --font-redhat: 'Red Hat Display', sans-serif;
@@ -135,5 +135,17 @@
     color: #ffffff;
     text-shadow: 0 0 10px #03bcf4, 0 0 20px #03bcf4, 0 0 40px #03bcf4,
       0 0 80px #03bcf4, 0 0 160px #03bcf4;
+  }
+}
+
+@keyframes getup {
+  0% {
+    transform: rotateX(90deg);
+  }
+  50% {
+    transform: rotateX(0deg);
+  }
+  100% {
+    transform: rotateX(90deg);
   }
 }
