@@ -1,3 +1,5 @@
 module.exports = {
-    UserService:require("./userService")
+    UserService:require("./userService"),
+    TenderService:require("./tenderService"),
+    BidService:require("./bidService"),
 }
