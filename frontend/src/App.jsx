@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Signup from './pages/Signup';
 import GovLayout from './Layouts/GovLayout';
+import Tenders from './pages/Gov/Tenders';
 
 function App() {
   return (
@@ -14,8 +15,9 @@ function App() {
           <Route path='/' element={<Login />} />
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<Signup />} />
-          <Route path='/gov' element={<GovLayout />} />
-          {/* Add more routes as needed */}
+          <Route path='/gov' element={<GovLayout />}>
+            <Route path='tenders' element={<Tenders />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </MainLayout>
