@@ -46,6 +46,10 @@ module.exports = {
       documents: {
         type: Sequelize.JSON
       },
+    //   closingRemarks: {
+    //     type: Sequelize.STRING,
+    //     allowNull: true
+    // },
       createdBy: {
         type: Sequelize.INTEGER,
         allowNull: false,

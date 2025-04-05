@@ -1,6 +1,9 @@
 const { SuccessResponse, ErrorResponse } = require("../utils/common");
 const { TenderService } = require("../services");
 const { StatusCodes } = require("http-status-codes");
+const {Bid,TenderDetail} =require("../models")
+const { BidRepostory } = require("../repositories");
+const BidRepo = new BidRepostory();
 
 async function createTender(req, res) {
     try {
@@ -27,6 +30,79 @@ async function createTender(req, res) {
     }
 }
 
+
+const approveBidAndCloseTender = async (req, res) => {
+    try {
+      const { bidId } = req.params;
+      const { closingRemarks } = req.body;
+  
+      const bid = await BidRepo.findOne({
+        where: { id: bidId },
+        include: [
+          {
+            model: TenderDetail,
+            as: 'tender' // ✅ This matches the alias in Bid model
+          }
+        ]
+      });
+  
+      if (!bid) {
+        return res.status(StatusCodes.BAD_REQUEST).json({
+          success: false,
+          message: 'Bid not found',
+          data: [],
+          error: 'Bid not found'
+        });
+      }
+  
+      bid.isApproved = true;
+    //   bid.remarks = closingRemarks || 'Approved by admin';
+      await bid.save();
+  
+      const tender = bid.tender;
+      if (!tender) {
+        return res.status(StatusCodes.BAD_REQUEST).json({
+          success: false,
+          message: 'Tender not found for this bid',
+          data: [],
+          error: 'Tender not associated with bid'
+        });
+      }
+  
+      tender.status = 'Closed';
+    //   tender.closingRemarks = closingRemarks || 'Closed after bid approval';
+      await tender.save();
+  
+      return res.status(StatusCodes.OK).json({
+        success: true,
+        message: 'Bid approved and tender closed successfully',
+        data: {
+          bid: {
+            id: bid.id,
+            bidPrice: bid.bidPrice,
+            isApproved: bid.isApproved,
+            // remarks: bid.remarks
+          },
+          tender: {
+            id: tender.id,
+            title: tender.title,
+            status: tender.status,
+            // closingRemarks: tender.closingRemarks
+          }
+        },
+        error: {}
+      });
+  
+    } catch (error) {
+      console.error('Error in approveBidAndCloseTender:', error.message);
+      return res.status(error.statusCode || 500).json({
+        success: false,
+        message: 'Failed to approve bid or close tender',
+        data: [],
+        error: error.message
+      });
+    }
+  };
 
 async function allTender(req, res) {
     try {
@@ -91,4 +167,4 @@ async function update(req, res) {
     }
 }
 
-module.exports = { createTender, allTender, getUniqueYears,destroy ,update};
+module.exports = { createTender, allTender, getUniqueYears,destroy ,update,approveBidAndCloseTender};

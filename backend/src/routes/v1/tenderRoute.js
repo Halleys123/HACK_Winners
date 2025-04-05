@@ -179,4 +179,79 @@ router.post("/",AuthRequestMiddleware.checkAuth, TenderController.createTender);
  */
 router.get("/get", AuthRequestMiddleware.checkAuth,TenderController.allTender);
 
+
+
+/**
+ * @swagger
+ * /api/v1/tender/approve/{bidId}:
+ *   patch:
+ *     summary: Approve a bid and close the corresponding tender
+ *     tags: [Tenders]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: bidId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID of the bid to approve
+ *     requestBody:
+ *       required: false
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               closingRemarks:
+ *                 type: string
+ *                 example: "Approved due to lowest bid and strong portfolio"
+ *     responses:
+ *       200:
+ *         description: Bid approved and tender closed successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: "Bid approved and tender closed successfully"
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     bid:
+ *                       type: object
+ *                       properties:
+ *                         id:
+ *                           type: number
+ *                           example: 1
+ *                         bidPrice:
+ *                           type: number
+ *                           example: 4500000
+ *                         isApproved:
+ *                           type: boolean
+ *                           example: true
+ *                     tender:
+ *                       type: object
+ *                       properties:
+ *                         id:
+ *                           type: number
+ *                           example: 101
+ *                         title:
+ *                           type: string
+ *                           example: "Bridge construction in Gaya"
+ *                         status:
+ *                           type: string
+ *                           example: "Closed"
+ *       400:
+ *         description: Bid or Tender not found
+ *       500:
+ *         description: Failed to approve bid or close tender
+ */
+
+router.patch("/approve/:bidId",AuthRequestMiddleware.checkAuth,TenderController.approveBidAndCloseTender);
 module.exports = router;

@@ -25,6 +25,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.ENUM('Open', 'Closed', 'Awarded'),
       defaultValue: 'Open'
     },
+    // closingRemarks: {
+    //     type: DataTypes.TEXT,
+    //     allowNull: true
+    // },
     createdBy: {
       type: DataTypes.INTEGER,
       allowNull: false,
