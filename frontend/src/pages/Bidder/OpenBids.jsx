@@ -4,9 +4,13 @@ import TableRow from './components/TableRow';
 import Pagination from './components/Pagination';
 import { tenderList } from '@/data/tenderList';
 import HelpSidebar from '@/components/HelpSidebar';
+import BidDetails from './components/BidDetails';
+import TenderDetails from './components/TenderDetails';
 
 export default function OpenBids() {
   const [showSidebar, setShowSidebar] = useState(false);
+  const [showTenderSidebar, setShowTenderSidebar] = useState(false);
+
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
   const [filteredData, setFilteredData] = useState(tenderList);
@@ -46,10 +50,70 @@ export default function OpenBids() {
           </button>
         </div>
       </div>
+      <HelpSidebar visible={showSidebar} close={() => setShowSidebar(false)}>
+        <BidDetails
+          data={{
+            id: 1,
+            tenderId: 1,
+            contractorId: 2,
+            bidPrice: 48500000,
+            documents: {
+              financialProposal:
+                'https://contractorsite.in/docs/bid-financial-proposal.pdf',
+              technicalProposal:
+                'https://contractorsite.in/docs/bid-tech-proposal.pdf',
+            },
+            isApproved: false,
+            remarks: 'Ready to mobilize within 2 weeks of award',
+            createdAt: '2025-04-04T10:44:46.000Z',
+            updatedAt: '2025-04-05T05:45:25.000Z',
+            tender: {
+              id: 1,
+              title: 'Construction of Rural Roads in Bihar',
+              tenderNumber: 'TND2025001',
+              estimatedCost: 50000000,
+              category: 'Infrastructure',
+            },
+            contractor: {
+              id: 2,
+              name: 'Alice Johnson',
+              email: 'alice@example.com',
+              ethAddress: '0xAbC1234567890DeF1234567890AbCdEf12345678',
+            },
+          }}
+          onSubmitBid={() => {}}
+          onWithdrawBid={() => {}}
+        />
+      </HelpSidebar>
       <HelpSidebar
-        visible={showSidebar}
-        close={() => setShowSidebar(false)}
-      ></HelpSidebar>
+        visible={showTenderSidebar}
+        close={() => setShowTenderSidebar(false)}
+      >
+        <TenderDetails
+          tender={{
+            id: 'a1b2c3d4',
+            title: 'Construction of Rural Roads in Bihar',
+            description:
+              'Development and maintenance of rural roads under PMGSY scheme.',
+            tenderNumber: 'TND2025001',
+            estimatedCost: 50000000,
+            category: 'Infrastructure',
+            currency: 'INR',
+            releaseDate: '2025-04-01T00:00:00.000Z',
+            submissionDeadline: '2025-04-30T00:00:00.000Z',
+            status: 'Open',
+            createdBy: 1,
+            documents: {
+              requirementsDoc: 'https://gov-tenders.in/docs/TND2025001-req.pdf',
+              sitePlan: 'https://gov-tenders.in/docs/TND2025001-siteplan.pdf',
+            },
+            createdAt: '2025-04-05T10:04:53.035Z',
+            updatedAt: '2025-04-05T10:04:53.035Z',
+          }}
+          onSubmitBid={() => {}}
+          onWithdrawBid={() => {}}
+        />
+      </HelpSidebar>
       <div className='bg-neutral-800 rounded-xl overflow-hidden shadow-xl border border-violet-700'>
         <div className='p-4 bg-gray-750 border-b border-gray-700 flex justify-between items-center'>
           <h2 className='font-medium text-white flex items-center gap-2'>
@@ -83,7 +147,9 @@ export default function OpenBids() {
                   endDate={item.endDate}
                   status={item.status}
                   amount={item.amount}
-                  onClick={() => setShowSidebar(true)}
+                  onClick={() => {
+                    setShowTenderSidebar(true);
+                  }}
                 />
               ))}
             </tbody>
