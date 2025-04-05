@@ -1,0 +1,14 @@
+{
+  "name": "ethereum-web3-project",
+  "version": "1.0.0",
+  "description": "A basic Ethereum project using Solidity and Web3.js",
+  "main": "index.js",
+  "scripts": {
+    "deploy": "node deploy.js",
+    "interact": "node interact.js"
+  },
+  "dependencies": {
+    "web3": "^1.8.0",
+    "dotenv": "^16.0.0"
+  }
+}

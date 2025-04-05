@@ -181,3 +181,10 @@
     opacity: 0;
   }
 }
+
+.submit {
+  @apply w-full h-12 rounded-xl mt-4 bg-white text-black font-redhat text-center cursor-pointer hover:bg-neutral-50;
+}
+.danger {
+  @apply w-full h-12 rounded-xl mt-4 bg-red-400 font-redhat text-center cursor-pointer hover:bg-red-500 text-white;
+}

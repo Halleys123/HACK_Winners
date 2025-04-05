@@ -1,11 +1,23 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import AuthLayout from '../Layouts/AuthLayout';
 import AuthInput from '@/components/Inputs/AuthInput';
 
 export default function Login() {
+  const ref = useRef(null);
+  function handleSubmit(e) {
+    e.preventDefault();
+    const formData = new FormData(ref.current);
+    const data = Object.fromEntries(formData.entries());
+    console.log(data);
+  }
+
   return (
     <AuthLayout>
-      <div className='flex flex-col gap-2 max-w-md'>
+      <form
+        onSubmit={handleSubmit}
+        ref={ref}
+        className='flex flex-col gap-2 max-w-md'
+      >
         <span className='font-redhat text-neutral-300 text-3xl font-light'>
           Sign In
         </span>
@@ -21,11 +33,14 @@ export default function Login() {
             autocomplete='email'
           />
           <AuthInput className='max-w-md' label='Password' type='password' />
-          <button className='w-full h-12 rounded-xl mt-4 bg-white text-black font-redhat text-center cursor-pointer hover:bg-neutral-50'>
+          <button
+            type='submit'
+            className='w-full h-12 rounded-xl mt-4 bg-white text-black font-redhat text-center cursor-pointer hover:bg-neutral-50'
+          >
             Sign In
           </button>
         </div>
-      </div>
+      </form>
     </AuthLayout>
   );
 }
