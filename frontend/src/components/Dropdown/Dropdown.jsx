@@ -5,6 +5,7 @@ export default function Dropdown({
   label = 'Select an option',
   options = [],
   className = '',
+  disabled = false,
   ...props
 }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,22 +15,26 @@ export default function Dropdown({
   const isLabelTop = focused || selectedValue !== '';
 
   const handleFocus = () => {
-    setFocused(true);
+    if (!disabled) setFocused(true);
   };
 
   const handleBlur = () => {
-    setFocused(false);
+    if (!disabled) setFocused(false);
   };
 
   const toggleDropdown = (e) => {
     e.preventDefault();
-    setIsOpen(!isOpen);
-    handleFocus();
+    if (!disabled) {
+      setIsOpen(!isOpen);
+      handleFocus();
+    }
   };
 
   const selectOption = (option) => {
-    setSelectedValue(option);
-    setIsOpen(false);
+    if (!disabled) {
+      setSelectedValue(option);
+      setIsOpen(false);
+    }
   };
 
   // Close dropdown when clicking outside
@@ -50,27 +55,44 @@ export default function Dropdown({
   return (
     <div
       ref={dropdownRef}
-      className={`relative flex flex-row items-center cursor-pointer gap-0 px-6 py-1 outline-1 outline-neutral-600 max-w-80 w-full rounded-lg min-h-12 ${className}`}
+      className={`relative flex flex-row items-center gap-0 px-6 py-1 outline-1 outline-neutral-600 max-w-80 w-full rounded-lg min-h-12 ${
+        disabled
+          ? 'cursor-not-allowed bg-neutral-800 text-neutral-500'
+          : 'cursor-pointer'
+      } ${className}`}
       onClick={toggleDropdown}
     >
+      <input
+        value={selectedValue}
+        type='hidden'
+        {...props}
+        disabled={disabled}
+      />
       <label
-        className={`text-neutral-400 cursor-pointer text-sm bg-neutral-950 absolute transition-all duration-200 ${
+        className={`text-neutral-400 text-sm bg-neutral-950 absolute transition-all duration-200 ${
           isLabelTop
             ? '-top-2 left-3 text-xs'
             : 'top-1/2 -translate-y-1/2 left-8'
-        }`}
+        } ${disabled ? 'text-neutral-500' : ''}`}
       >
         {label}
       </label>
 
-      <div className='bg-transparent w-full h-full outline-none text-neutral-200 flex items-center'>
+      <div
+        className={`bg-transparent w-full h-full outline-none flex items-center ${
+          disabled ? 'text-neutral-500' : 'text-neutral-200'
+        }`}
+      >
         {selectedValue || ''}
       </div>
 
       <button
         type='button'
-        className='absolute right-4 top-1/2 -translate-y-1/2 text-neutral-400'
+        className={`absolute right-4 top-1/2 -translate-y-1/2 ${
+          disabled ? 'text-neutral-500' : 'text-neutral-400'
+        }`}
         onClick={toggleDropdown}
+        disabled={disabled}
       >
         {isOpen ? (
           <ChevronUp className='cursor-pointer' size={18} />
@@ -79,7 +101,7 @@ export default function Dropdown({
         )}
       </button>
 
-      {isOpen && (
+      {isOpen && !disabled && (
         <div className='absolute left-0 top-full mt-1 w-full bg-neutral-900 border border-neutral-700 rounded-md z-10 max-h-60 overflow-y-auto'>
           {options.map((option, index) => (
             <div

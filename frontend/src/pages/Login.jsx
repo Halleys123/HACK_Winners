@@ -1,18 +1,48 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import AuthLayout from '../Layouts/AuthLayout';
 import AuthInput from '@/components/Inputs/AuthInput';
+import { useNavigate } from 'react-router-dom';
+import customFetch from '@/utils/Fetch';
+import Loading from '@/components/Loading';
 
 export default function Login() {
   const ref = useRef(null);
-  function handleSubmit(e) {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+
+  async function handleSubmit(e) {
     e.preventDefault();
     const formData = new FormData(ref.current);
     const data = Object.fromEntries(formData.entries());
     console.log(data);
+    setLoading(true);
+    const response = await customFetch('/user/signIn', {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    setLoading(false);
+
+    if (!response.data.success) {
+      return;
+    }
+
+    console.log(response.data);
+    localStorage.setItem('token', response.data.data.token);
+
+    if (response.data.data.user.role === 'Admin') {
+      navigate('/gov');
+    } else {
+      navigate('/bidder');
+    }
   }
 
   return (
     <AuthLayout>
+      <Loading visible={loading} text='Adding Data... Please Wait' />
+
       <form
         onSubmit={handleSubmit}
         ref={ref}
@@ -30,9 +60,15 @@ export default function Login() {
             className='max-w-md'
             label='Email'
             type='email'
+            name='email'
             autocomplete='email'
           />
-          <AuthInput className='max-w-md' label='Password' type='password' />
+          <AuthInput
+            name='password'
+            className='max-w-md'
+            label='Password'
+            type='password'
+          />
           <button
             type='submit'
             className='w-full h-12 rounded-xl mt-4 bg-white text-black font-redhat text-center cursor-pointer hover:bg-neutral-50'

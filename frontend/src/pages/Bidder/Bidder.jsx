@@ -16,12 +16,6 @@ export default function Bidder() {
             view the details of each tender by clicking on it.
           </span>
         </div>
-        {/* <PlusSquare
-          strokeWidth={1.5}
-          size={32}
-          onClick={() => setShowpopover(true)}
-          className='text-white cursor-pointer hover:text-violet-500 transition-all duration-200 ease-in-out'
-        /> */}
       </div>
       <Popover
         close={() => setShowpopover(false)}

@@ -44,7 +44,7 @@ export default async function customFetch(
     const request = await fetch(url, option);
     const data = await request.json();
     response = {
-      error: request.status !== 200,
+      error: request.status >= 400,
       status: request.status,
       data: data,
     };

@@ -1,11 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TenderCard from '@/components/TenderCard';
 import { PlusSquare } from 'lucide-react';
 import Popover from '@/components/Popover';
 import PopoverContent from './components/AddTender';
+import customFetch from '@/utils/Fetch';
 
 export default function Tenders() {
   const [showPopover, setShowpopover] = useState(false);
+  const [tenders, setTenders] = useState([]);
+
+  async function getTender() {
+    const response = await customFetch('/tender/get', null);
+    if (!response.data.success) {
+      return;
+    }
+    setTenders(response.data.data);
+  }
+
+  useEffect(() => {
+    getTender();
+  }, []);
+
   return (
     <div className='flex flex-col gap-8'>
       <div className='flex flex-row justify-between items-center'>
@@ -26,9 +41,9 @@ export default function Tenders() {
         <PopoverContent />
       </Popover>
       <div className='flex flex-row flex-wrap gap-x-2 gap-y-4'>
-        <TenderCard />;
-        <TenderCard />;
-        <TenderCard />;
+        {tenders.map((tender) => (
+          <TenderCard {...tender} key={tender.id} />
+        ))}
       </div>
     </div>
   );

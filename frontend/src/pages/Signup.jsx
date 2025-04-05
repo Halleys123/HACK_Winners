@@ -1,20 +1,24 @@
-import React, { useRef, useState } from 'react';
+import React, { use, useRef, useState } from 'react';
 import AuthLayout from '../Layouts/AuthLayout';
 import AuthInput from '@/components/Inputs/AuthInput';
 import Dropdown from '@/components/Dropdown/Dropdown';
 import Loading from '@/components/Loading';
 import customFetch from '@/utils/Fetch';
+import Info from '@/components/Info';
+import { useNavigate } from 'react-router-dom';
 
 export default function Signup() {
+  const location = useNavigate();
   const ref = useRef(null);
   const [loading, setLoading] = useState(false);
+  const [info, setInfo] = useState(true);
+
   async function handleSubmit(e) {
     e.preventDefault();
     const formData = new FormData(ref.current);
     const data = Object.fromEntries(formData.entries());
-
     setLoading(true);
-    const response = await customFetch('/register', {
+    const response = await customFetch('/user/register', {
       method: 'POST',
       body: JSON.stringify(data),
       headers: {
@@ -22,11 +26,23 @@ export default function Signup() {
       },
     });
     setLoading(false);
-    console.log(response);
+
+    if (response.error) {
+      setInfo(true);
+      return;
+    }
+
+    localStorage.setItem('token', response.data.data.token);
+    if (data.role === 'Admin') {
+      location('/gov');
+    } else {
+      location('/bidder');
+    }
   }
 
   return (
     <AuthLayout>
+      <Info visible={info} setVisible={setInfo} />
       <Loading visible={loading} text='Adding Data... Please Wait' />
       <form
         ref={ref}
@@ -61,20 +77,21 @@ export default function Signup() {
             type='password'
           />
           <AuthInput
-            name='username'
+            name='password'
             className='max-w-md'
             label='Password'
             type='password'
           />
           <AuthInput
+            name='confirm-password'
             className='max-w-md'
             label='Confirm Password'
             type='password'
-            name='confirm-password'
           />
           <Dropdown
             className='max-w-md'
             label='User Type'
+            name='role'
             options={['Admin', 'Contractor', 'Transporter']}
           />
           <div className='flex flex-row gap-2 items-center ml-2 mt-4'>
