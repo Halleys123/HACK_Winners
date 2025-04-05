@@ -14,7 +14,9 @@ async function userCreate(data) {
         if (!allowedRoles.includes(data.role)) {
           throw new AppError(`Invalid role. Must be one of: ${allowedRoles.join(', ')}`, StatusCodes.BAD_REQUEST);
         }
+        const user = await UserRepo.create(data);
         const payload = {
+            id: user.id, 
             email: data.email,
             role: data.role,
             name: data.name
@@ -23,9 +25,6 @@ async function userCreate(data) {
           const token = jwt.sign(payload, ServerConfig.JWT_SECRET, {
             expiresIn: "1d"
           });
-
-
-        const user = await UserRepo.create(data);
 
         return { user, token };
         } catch (error) {

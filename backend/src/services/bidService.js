@@ -13,7 +13,7 @@ async function bidCreate(data) {
         // }
         const allowedRoles = ['Contractor', 'Transporter'];
 
-        if (!allowedRoles.includes(req.user.role)) {
+        if (!allowedRoles.includes(data.role)) {
         throw new AppError("Only Contractors or Transporters are allowed to place bids", StatusCodes.FORBIDDEN);
         }
         const bid = await BidRepo.create(data);
