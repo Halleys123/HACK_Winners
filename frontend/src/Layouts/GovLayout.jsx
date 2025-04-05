@@ -1,5 +1,5 @@
+import GovNavbar from '@/components/Navbar/GovNavbar';
 import React from 'react';
-import GovNavbar from '@/components/GovNavbar';
 import { Outlet } from 'react-router-dom';
 
 export default function GovLayout() {
