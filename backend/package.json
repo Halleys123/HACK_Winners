@@ -20,7 +20,12 @@
     "sequelize": "^6.31.1",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1",
-    "winston": "^3.8.2"
+    "winston": "^3.8.2",
+    "@truffle/hdwallet-provider": "^2.1.15",
+    "ganache": "^7.9.2",
+    "mocha": "^11.1.0",
+    "solc": "^0.8.29",
+    "web3": "^4.16.0"
   },
   "devDependencies": {
     "sequelize-cli": "^6.6.2"
