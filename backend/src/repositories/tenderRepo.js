@@ -1,6 +1,8 @@
 const CrudRepositery = require("./crud");
 const { TenderDetail, User } = require("../models");
 const { Op } = require("sequelize");
+const AppError = require("../utils/errors/app-error");
+const { StatusCodes } = require("http-status-codes");
 
 class TenderRepository extends CrudRepositery {
   constructor() {
