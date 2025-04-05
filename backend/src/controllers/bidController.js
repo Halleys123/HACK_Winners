@@ -10,7 +10,8 @@ async function createBid(req, res) {
             bidPrice: req.body.bidPrice,
             documents: req.body.documents || [],
             isApproved: req.body.isApproved ?? false,
-            remarks: req.body.remarks || ''
+            remarks: req.body.remarks || '',
+            role:req.user.role
         });
 
         SuccessResponse.data = bid;
