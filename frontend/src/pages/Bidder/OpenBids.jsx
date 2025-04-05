@@ -30,7 +30,11 @@ export default function OpenBids() {
   };
 
   async function getTender() {
+    setLoading(true);
+    setLoaderText('Loading Tenders... Please Wait');
     const response = await customFetch('/tender/get', null);
+    setLoading(false);
+    setLoaderText('Loading... Please Wait');
     if (!response.data.success) {
       return;
     }
@@ -38,7 +42,11 @@ export default function OpenBids() {
   }
 
   async function getTenderDetail(tenderID) {
+    setLoading(true);
+    setLoaderText('Loading Tender Details... Please Wait');
     const response = await customFetch(`/tender/get/${tenderID}`, null);
+    setLoading(false);
+    setLoaderText('Loading... Please Wait');
     if (!response.data.success) {
       return;
     }
@@ -56,7 +64,7 @@ export default function OpenBids() {
       }),
     });
     setLoading(false);
-    if (!response.data.data.success) {
+    if (!response.data.success) {
       setLoading(true);
       setLoaderText('Failed to submit bid');
       setTimeout(() => {

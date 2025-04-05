@@ -16,8 +16,8 @@ export default function TenderCard({
   submissionDeadline = new Date(),
   documents = {},
   tenderNumber = 'TND2025001',
+  onClick = () => {},
 }) {
-  // Format date function
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-IN', {
@@ -49,7 +49,10 @@ export default function TenderCard({
 
   return (
     <div className='max-w-md'>
-      <div className='w-full p-6 rounded-xl bg-gray-900 text-gray-100 border border-gray-800 shadow-xl overflow-hidden'>
+      <div
+        onClick={onClick}
+        className='w-full p-6 rounded-xl bg-gray-900 hover:bg-gray-950 cursor-pointer text-gray-100 border border-gray-800 shadow-xl overflow-hidden'
+      >
         <div className='flex justify-between items-start mb-4'>
           <span
             className={`px-3 py-1 text-xs font-medium rounded-full ${

@@ -22,7 +22,7 @@ export default function BidderNavbar() {
           }}
         >
           <FileText size={20} className='text-amber-400' />
-          <span>Tenders</span>
+          <span>My Bids</span>
         </NavLink>
         <NavLink
           to={'/bidder/open-tenders'}
@@ -34,7 +34,7 @@ export default function BidderNavbar() {
           }}
         >
           <HammerIcon size={20} className='text-amber-400' />
-          <span>Bid on Tenders</span>
+          <span>Open Tenders</span>
         </NavLink>
       </div>
 

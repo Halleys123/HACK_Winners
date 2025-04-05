@@ -13,7 +13,8 @@ export default function Bidder() {
 
   async function getBidder() {
     setLoading(true);
-    const response = await customFetch('/bid/get', null);
+    const id = localStorage.getItem('userId');
+    const response = await customFetch(`/bid/get?contractorId=${id}`, null);
     setLoading(false);
     if (!response.data.success) {
       return;

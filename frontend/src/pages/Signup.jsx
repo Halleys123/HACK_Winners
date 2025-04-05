@@ -33,6 +33,8 @@ export default function Signup() {
     }
 
     localStorage.setItem('token', response.data.data.token);
+    localStorage.setItem('userId', response.data.data.user.id);
+
     if (data.role === 'Admin') {
       location('/gov');
     } else {

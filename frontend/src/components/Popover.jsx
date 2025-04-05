@@ -2,7 +2,12 @@ import { X } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 
-export default function Popover({ children, close, visible = false }) {
+export default function Popover({
+  children,
+  className,
+  close,
+  visible = false,
+}) {
   const [isRendered, setIsRendered] = useState(visible);
   const [isAnimatingOut, setIsAnimatingOut] = useState(false);
 
@@ -41,7 +46,7 @@ export default function Popover({ children, close, visible = false }) {
           perspective: '1000px',
           transformOrigin: 'center bottom',
         }}
-        className='max-w-3xl relative mx-8 min-h-96 w-full outline-4 outline-neutral-600 rounded-lg bg-neutral-950 shadow-[0px_0px_27px_0px_#2D2D2D] overflow-hidden'
+        className={`max-w-3xl relative mx-8 min-h-96 w-full outline-4 outline-neutral-600 rounded-lg bg-neutral-950 shadow-[0px_0px_27px_0px_#2D2D2D] overflow-hidden className`}
         onClick={(e) => e.stopPropagation()}
       >
         <div className='absolute top-4 right-4 group' onClick={close}>

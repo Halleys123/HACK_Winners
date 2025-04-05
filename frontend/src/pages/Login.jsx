@@ -31,6 +31,7 @@ export default function Login() {
 
     console.log(response.data);
     localStorage.setItem('token', response.data.data.token);
+    localStorage.setItem('userId', response.data.data.user.id);
 
     if (response.data.data.user.role === 'Admin') {
       navigate('/gov');
