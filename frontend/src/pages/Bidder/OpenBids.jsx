@@ -1,19 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AlertCircle, Filter, Search } from 'lucide-react';
 import TableRow from './components/TableRow';
 import Pagination from './components/Pagination';
-import { tenderList } from '@/data/tenderList';
 import HelpSidebar from '@/components/HelpSidebar';
 import BidDetails from './components/BidDetails';
 import TenderDetails from './components/TenderDetails';
+import customFetch from '@/utils/Fetch';
+import Loading from '@/components/Loading';
 
 export default function OpenBids() {
   const [showSidebar, setShowSidebar] = useState(false);
   const [showTenderSidebar, setShowTenderSidebar] = useState(false);
 
+  const [loading, setLoading] = useState(false);
+  const [loaderText, setLoaderText] = useState('Loading...');
+
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
-  const [filteredData, setFilteredData] = useState(tenderList);
+  const [filteredData, setFilteredData] = useState([]);
+  const [tenderDetails, setTenderDetails] = useState({});
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -24,8 +29,55 @@ export default function OpenBids() {
     setCurrentPage(pageNumber);
   };
 
+  async function getTender() {
+    const response = await customFetch('/tender/get', null);
+    if (!response.data.success) {
+      return;
+    }
+    setFilteredData(response.data.data);
+  }
+
+  async function getTenderDetail(tenderID) {
+    const response = await customFetch(`/tender/get/${tenderID}`, null);
+    if (!response.data.success) {
+      return;
+    }
+    console.log(response.data.data);
+    setTenderDetails(response.data.data);
+  }
+
+  async function submitBid(tenderId, bidPrice) {
+    setLoading(true);
+    const response = await customFetch(`/bid`, {
+      method: 'POST',
+      body: JSON.stringify({
+        bidPrice: 1 * bidPrice,
+        tenderId,
+      }),
+    });
+    setLoading(false);
+    if (!response.data.data.success) {
+      setLoading(true);
+      setLoaderText('Failed to submit bid');
+      setTimeout(() => {
+        setLoading(false);
+      }, 2000);
+      return;
+    }
+    setLoading(true);
+    setLoaderText('Bid submitted successfully');
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  }
+
+  useEffect(() => {
+    getTender();
+  }, []);
+
   return (
     <div className='flex flex-col gap-8'>
+      <Loading visible={loading} text={loaderText} />
       <div className='flex justify-between items-center'>
         <div className='flex flex-col gap-1'>
           <h1 className='text-2xl font-bold text-white'>Open Bids</h1>
@@ -50,7 +102,7 @@ export default function OpenBids() {
           </button>
         </div>
       </div>
-      <HelpSidebar visible={showSidebar} close={() => setShowSidebar(false)}>
+      {/* <HelpSidebar visible={showSidebar} close={() => setShowSidebar(false)}>
         <BidDetails
           data={{
             id: 1,
@@ -84,35 +136,12 @@ export default function OpenBids() {
           onSubmitBid={() => {}}
           onWithdrawBid={() => {}}
         />
-      </HelpSidebar>
+      </HelpSidebar> */}
       <HelpSidebar
         visible={showTenderSidebar}
         close={() => setShowTenderSidebar(false)}
       >
-        <TenderDetails
-          tender={{
-            id: 'a1b2c3d4',
-            title: 'Construction of Rural Roads in Bihar',
-            description:
-              'Development and maintenance of rural roads under PMGSY scheme.',
-            tenderNumber: 'TND2025001',
-            estimatedCost: 50000000,
-            category: 'Infrastructure',
-            currency: 'INR',
-            releaseDate: '2025-04-01T00:00:00.000Z',
-            submissionDeadline: '2025-04-30T00:00:00.000Z',
-            status: 'Open',
-            createdBy: 1,
-            documents: {
-              requirementsDoc: 'https://gov-tenders.in/docs/TND2025001-req.pdf',
-              sitePlan: 'https://gov-tenders.in/docs/TND2025001-siteplan.pdf',
-            },
-            createdAt: '2025-04-05T10:04:53.035Z',
-            updatedAt: '2025-04-05T10:04:53.035Z',
-          }}
-          onSubmitBid={() => {}}
-          onWithdrawBid={() => {}}
-        />
+        <TenderDetails tender={tenderDetails} submitBid={submitBid} />
       </HelpSidebar>
       <div className='bg-neutral-800 rounded-xl overflow-hidden shadow-xl border border-violet-700'>
         <div className='p-4 bg-gray-750 border-b border-gray-700 flex justify-between items-center'>
@@ -143,13 +172,13 @@ export default function OpenBids() {
                   key={item.id}
                   id={item.id}
                   title={item.title}
-                  issuedOn={item.issuedOn}
-                  endDate={item.endDate}
+                  issuedOn={new Date(item.releaseDate).toDateString()}
+                  endDate={new Date(item.submissionDeadline).toDateString()}
                   status={item.status}
-                  amount={item.amount}
+                  amount={item.estimatedCost}
                   onClick={() => {
-                    // setShowTenderSidebar(true);
-                    setShowSidebar(true);
+                    getTenderDetail(item.id);
+                    setShowTenderSidebar(true);
                   }}
                 />
               ))}

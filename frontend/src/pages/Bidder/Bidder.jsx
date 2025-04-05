@@ -2,10 +2,17 @@ import Popover from '@/components/Popover';
 import TenderCard from '@/components/TenderCard';
 import { PlusSquare } from 'lucide-react';
 import React, { useState } from 'react';
+import BidCard from './components/BidCard';
 
 export default function Bidder() {
   const [showPopover, setShowpopover] = useState(false);
-
+  // async function getTender() {
+  //   const response = await customFetch('/tender/get', null);
+  //   if (!response.data.success) {
+  //     return;
+  //   }
+  //   setTenders(response.data.data);
+  // }
   return (
     <div className='flex flex-col gap-8'>
       <div className='flex flex-row justify-between items-center'>
@@ -22,9 +29,7 @@ export default function Bidder() {
         visible={showPopover}
       ></Popover>
       <div className='flex flex-row flex-wrap gap-x-2 gap-y-4'>
-        <TenderCard />;
-        <TenderCard />;
-        <TenderCard />;
+        <BidCard />
       </div>
     </div>
   );

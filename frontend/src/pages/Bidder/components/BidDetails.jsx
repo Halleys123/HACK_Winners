@@ -138,7 +138,6 @@ export default function BidDetailsSidebar({ data }) {
         </div>
       </div>
 
-      {/* Timestamps */}
       <div className='mt-auto text-xs text-neutral-500'>
         <div className='flex items-center gap-1 mb-1'>
           <Calendar size={12} />

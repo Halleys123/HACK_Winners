@@ -1,8 +1,9 @@
 import React from 'react';
 import { LogOut, FileText, HammerIcon } from 'lucide-react'; // Assuming you're using lucide-react for icons
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 export default function BidderNavbar() {
+  const navigate = useNavigate();
   return (
     <div className='z-0 flex flex-col gap-4 rounded-md bg-neutral-900 w-72 h-full p-4 outline outline-amber-950 drop-shadow-2xl shadow-amber-500/50'>
       <div className='mb-6 mt-2'>
@@ -38,7 +39,13 @@ export default function BidderNavbar() {
       </div>
 
       <div className='mt-auto pt-4 border-t border-amber-900/50'>
-        <button className='w-full cursor-pointer flex items-center gap-3 px-4 py-3 text-left text-white hover:bg-red-900/30 rounded-md transition-colors'>
+        <button
+          onClick={() => {
+            localStorage.removeItem('token');
+            navigate('/login');
+          }}
+          className='w-full cursor-pointer flex items-center gap-3 px-4 py-3 text-left text-white hover:bg-red-900/30 rounded-md transition-colors'
+        >
           <LogOut size={20} className='text-red-400' />
           <span>Logout</span>
         </button>

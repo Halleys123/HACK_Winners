@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Calendar,
   Clock,
@@ -11,8 +11,9 @@ import {
   ChevronRight,
 } from 'lucide-react';
 
-export default function TenderDetails({ tender }) {
+export default function TenderDetails({ tender, submitBid = () => {} }) {
   // If no tender is provided, show a placeholder or return null
+  const [value, setValue] = useState('');
   if (!tender) return null;
 
   const {
@@ -85,7 +86,7 @@ export default function TenderDetails({ tender }) {
           <div>
             <p className='text-sm text-neutral-400'>Estimated Cost</p>
             <p className='text-lg font-bold text-white'>
-              ₹{estimatedCost.toLocaleString()}
+              ₹{estimatedCost?.toLocaleString() || 'Not Defined'}
             </p>
           </div>
         </div>
@@ -97,13 +98,15 @@ export default function TenderDetails({ tender }) {
                 ₹
               </span>
               <input
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
                 type='number'
                 placeholder='Enter your bid amount'
                 className='w-full bg-neutral-700 border border-neutral-600 rounded-lg py-2 pl-8 pr-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500'
               />
             </div>
             <button
-              onClick={() => {}}
+              onClick={() => submitBid(id, value)}
               disabled={false}
               className={`px-4 py-2 rounded-lg transition-colors flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white`}
             >
