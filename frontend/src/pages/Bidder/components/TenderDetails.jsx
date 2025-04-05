@@ -6,7 +6,7 @@ import {
   ExternalLink,
   DollarSign,
   Info,
-  Tag,
+  //   Tag,
   Hash,
   ChevronRight,
 } from 'lucide-react';
@@ -43,13 +43,13 @@ export default function TenderDetails({ tender, submitBid = () => {} }) {
   };
 
   // Format currency for display
-  const formatCurrency = (amount, currencyCode) => {
-    return new Intl.NumberFormat('en-IN', {
-      style: 'currency',
-      currency: currencyCode || 'INR',
-      maximumFractionDigits: 0,
-    }).format(amount);
-  };
+  //   const formatCurrency = (amount, currencyCode) => {
+  //     return new Intl.NumberFormat('en-IN', {
+  //       style: 'currency',
+  //       currency: currencyCode || 'INR',
+  //       maximumFractionDigits: 0,
+  //     }).format(amount);
+  //   };
 
   return (
     <div className='flex flex-col gap-6 max-w-4xl mx-auto'>

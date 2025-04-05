@@ -9,7 +9,7 @@ import customFetch from '@/utils/Fetch';
 import Loading from '@/components/Loading';
 
 export default function OpenBids() {
-  const [showSidebar, setShowSidebar] = useState(false);
+  // const [showSidebar, setShowSidebar] = useState(false);
   const [showTenderSidebar, setShowTenderSidebar] = useState(false);
 
   const [loading, setLoading] = useState(false);

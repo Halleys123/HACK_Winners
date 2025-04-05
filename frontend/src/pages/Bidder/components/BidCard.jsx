@@ -9,8 +9,8 @@ import {
 
 export default function BidCard({
   id = 1,
-  tenderId = 1,
-  contractorId = 2,
+  //   tenderId = 1,
+  //   contractorId = 2,
   bidPrice = 48500000,
   documents = {
     financialProposal:

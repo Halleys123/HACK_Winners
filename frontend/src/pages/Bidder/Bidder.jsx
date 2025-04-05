@@ -1,20 +1,33 @@
 import Popover from '@/components/Popover';
 import TenderCard from '@/components/TenderCard';
 import { PlusSquare } from 'lucide-react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import BidCard from './components/BidCard';
+import customFetch from '@/utils/Fetch';
+import Loading from '@/components/Loading';
 
 export default function Bidder() {
   const [showPopover, setShowpopover] = useState(false);
-  // async function getTender() {
-  //   const response = await customFetch('/tender/get', null);
-  //   if (!response.data.success) {
-  //     return;
-  //   }
-  //   setTenders(response.data.data);
-  // }
+  const [biddings, setBiddings] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  async function getBidder() {
+    setLoading(true);
+    const response = await customFetch('/bid/get', null);
+    setLoading(false);
+    if (!response.data.success) {
+      return;
+    }
+    setBiddings(response.data.data);
+  }
+
+  useEffect(() => {
+    getBidder();
+  }, []);
+
   return (
     <div className='flex flex-col gap-8'>
+      <Loading visible={loading} text='Loading Bids...' />
       <div className='flex flex-row justify-between items-center'>
         <div className='flex flex-col gap-2'>
           <span className='text-2xl text-white'>Previous Contracts</span>
@@ -29,7 +42,9 @@ export default function Bidder() {
         visible={showPopover}
       ></Popover>
       <div className='flex flex-row flex-wrap gap-x-2 gap-y-4'>
-        <BidCard />
+        {biddings.map((bid) => (
+          <BidCard {...bid} key={bid.id} />
+        ))}
       </div>
     </div>
   );
