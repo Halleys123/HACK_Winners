@@ -148,7 +148,8 @@ export default function OpenBids() {
                   status={item.status}
                   amount={item.amount}
                   onClick={() => {
-                    setShowTenderSidebar(true);
+                    // setShowTenderSidebar(true);
+                    setShowSidebar(true);
                   }}
                 />
               ))}

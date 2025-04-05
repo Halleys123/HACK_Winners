@@ -22,7 +22,7 @@ export default function TenderDetails({ tender }) {
     tenderNumber,
     estimatedCost,
     category,
-    currency,
+    // currency,
     releaseDate,
     submissionDeadline,
     status,
