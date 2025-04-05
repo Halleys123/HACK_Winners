@@ -137,4 +137,46 @@ router.post("/",AuthRequestMiddleware.checkAuth, BidController.createBid);
  */
 router.get("/get",AuthRequestMiddleware.checkAuth, BidController.allBid);
 
+/**
+ * @swagger
+ * /api/v1/bid/get/{id}:
+ *   get:
+ *     summary: Get a bid by ID
+ *     tags: [Bids]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: Unique identifier of the bid
+ *         schema:
+ *           type: string
+ *           example: "1"
+ *     responses:
+ *       200:
+ *         description: Successfully fetched the bid details
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: "Bid fetched successfully"
+ *                 data:
+ *                   $ref: '#/components/schemas/Bid'
+ *       400:
+ *         description: Invalid ID or bad request
+ *       401:
+ *         description: Unauthorized
+ *       404:
+ *         description: Bid not found
+ */
+
+router.get("/get/:id",AuthRequestMiddleware.checkAuth,BidController.getBidOneDetail)
+
 module.exports = router;

@@ -117,12 +117,11 @@ async function allTender(req, res) {
     }
 }
 
-async function getUniqueYears(req, res) {
+async function getTenderById(req, res) {
     try {
-        const id = req.params.id || null;
-        const years = await UserService.getUniqueYears(id);
-        SuccessResponse.data = years;
-        return res.status(StatusCodes.OK).json(SuccessResponse);
+      const response=await TenderService.getTenderByIds(req.params.id);
+      SuccessResponse.data = response;
+      return res.status(StatusCodes.CREATED).json(SuccessResponse);
     } catch (error) {
         console.error("Error in getUniqueYears controller:", error);
         ErrorResponse.error = error.message || "Something went wrong";
@@ -167,4 +166,4 @@ async function update(req, res) {
     }
 }
 
-module.exports = { createTender, allTender, getUniqueYears,destroy ,update,approveBidAndCloseTender};
+module.exports = { createTender, allTender,destroy ,update,approveBidAndCloseTender,getTenderById};

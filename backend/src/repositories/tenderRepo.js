@@ -7,6 +7,27 @@ class TenderRepository extends CrudRepositery {
     super(TenderDetail);
   }
 
+
+
+  async getOneTender(id) {
+    const response = await this.model.findByPk(id, {
+      include: [
+        {
+          model: User,
+          as: "issuer",
+          attributes: ["id", "name", "email", "role"],
+        },
+      ],
+    });
+  
+    if (!response) {
+      throw new AppError("Not able to find the resource", StatusCodes.NOT_FOUND);
+    }
+  
+    return response;
+  }
+  
+
   async getByFilters(query) {
     const where = {};
 

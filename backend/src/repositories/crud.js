@@ -53,8 +53,8 @@ class CrudRepositery {
         }
     }
 
-    async get(data) {
-        const response = await this.model.findByPk(data);
+    async get(id) {
+        const response = await this.model.findByPk(id);
         if (!response) {
             throw new AppError(
                 "Not able to find the resource",

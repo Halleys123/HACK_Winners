@@ -32,6 +32,16 @@ async function bidCreate(data) {
       }
 }
 
+
+async function getBidByIds(id) {
+    try {
+        const tender = await BidRepo.getOneBid(id);
+        return tender;
+    } catch (error) {
+        console.error("Error in getUniqueYears:", error);
+        throw new AppError("Cannot get unique years", StatusCodes.INTERNAL_SERVER_ERROR);
+    }
+}
 async function getBid(query) {
     try {
         const bid = await BidRepo.getByFilters(query);
@@ -102,5 +112,5 @@ async function UpdateUser(data) {
         }
     }
 }
-module.exports = { bidCreate, getBid, getUniqueYears ,deleteUser,UpdateUser};
+module.exports = { bidCreate, getBid, getUniqueYears ,deleteUser,UpdateUser,getBidByIds};
 
