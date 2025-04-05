@@ -131,7 +131,7 @@ async function getTenderById(req, res) {
 
 async function destroy(req, res) {
     try {
-        const user = await UserService.deleteUser({
+        const user = await TenderService.deleteTender({
             id:req.params.id
         });
 
@@ -145,25 +145,4 @@ async function destroy(req, res) {
 }
 
 
-async function update(req, res) {
-    try {
-        const user = await UserService.UpdateUser({
-            id:req.params.id,
-            name: req.body.name,
-            rollNo: req.body.rollNo,
-            email: req.body.email,
-            picture: req.body.picture,
-            programmEnroled: req.body.programmEnroled,
-            year: req.body.year
-        });
-
-        SuccessResponse.data = user;
-        return res.status(StatusCodes.OK).json(SuccessResponse);
-    } catch (error) {
-        console.log(error, "the error in controller");
-        ErrorResponse.error = error;
-        return res.status(StatusCodes.BAD_REQUEST).json(ErrorResponse);
-    }
-}
-
-module.exports = { createTender, allTender,destroy ,update,approveBidAndCloseTender,getTenderById};
+module.exports = { createTender, allTender,destroy,approveBidAndCloseTender,getTenderById};

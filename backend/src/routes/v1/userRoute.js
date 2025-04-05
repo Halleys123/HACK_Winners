@@ -197,4 +197,45 @@ router.get("/get",AuthRequestMiddleware.checkAuth, UserController.allUser);
  */
 router.post("/signIn",UserController.createSign)
 
+/**
+ * @swagger
+ * /api/v1/user/delete/{id}:
+ *   delete:
+ *     summary: Delete a user by ID
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: Unique identifier of the user to delete
+ *         schema:
+ *           type: string
+ *           example: "1"
+ *     responses:
+ *       200:
+ *         description: User deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: "User deleted successfully"
+ *       400:
+ *         description: Invalid ID or bad request
+ *       401:
+ *         description: Unauthorized - Invalid or missing token
+ *       404:
+ *         description: User not found
+ */
+
+router.delete("/delete/:id",AuthRequestMiddleware.checkAuth,UserController.destroy)
+
+
 module.exports = router;

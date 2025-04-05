@@ -179,4 +179,44 @@ router.get("/get",AuthRequestMiddleware.checkAuth, BidController.allBid);
 
 router.get("/get/:id",AuthRequestMiddleware.checkAuth,BidController.getBidOneDetail)
 
+/**
+ * @swagger
+ * /api/v1/bid/delete/{id}:
+ *   delete:
+ *     summary: Delete a bid by ID
+ *     tags: [Bids]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: Unique identifier of the bid to delete
+ *         schema:
+ *           type: string
+ *           example: "1"
+ *     responses:
+ *       200:
+ *         description: Bid deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: "Bid deleted successfully"
+ *       400:
+ *         description: Invalid ID or bad request
+ *       401:
+ *         description: Unauthorized - Invalid or missing token
+ *       404:
+ *         description: Bid not found
+ */
+
+router.delete("/delete/:id",AuthRequestMiddleware.checkAuth,BidController.destroy)
+
 module.exports = router;
