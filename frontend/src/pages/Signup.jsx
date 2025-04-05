@@ -1,19 +1,33 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import AuthLayout from '../Layouts/AuthLayout';
 import AuthInput from '@/components/Inputs/AuthInput';
 import Dropdown from '@/components/Dropdown/Dropdown';
+import Loading from '@/components/Loading';
+import customFetch from '@/utils/Fetch';
 
 export default function Signup() {
   const ref = useRef(null);
-  function handleSubmit(e) {
+  const [loading, setLoading] = useState(false);
+  async function handleSubmit(e) {
     e.preventDefault();
     const formData = new FormData(ref.current);
     const data = Object.fromEntries(formData.entries());
-    console.log(data);
+
+    setLoading(true);
+    const response = await customFetch('/register', {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    setLoading(false);
+    console.log(response);
   }
 
   return (
     <AuthLayout>
+      <Loading visible={loading} text='Adding Data... Please Wait' />
       <form
         ref={ref}
         onSubmit={handleSubmit}

@@ -1,11 +1,13 @@
 import React from 'react';
 import glassImage from '@assets/pattern.jpg';
-import dots from '@assets/dots.jpg';
+
 import { Globe, Key, Plus } from 'lucide-react';
 
 export default function AuthLayout({ children }) {
   const cols = 4;
   const rows = 5;
+
+  console.log(import.meta.env.VITE_BACKEND);
 
   return (
     <div className='flex flex-row h-screen w-full overflow-hidden p-6 gap-6'>
