@@ -48,22 +48,10 @@ async function allBid(req, res) {
     }
 }
 
-async function getUniqueYears(req, res) {
-    try {
-        const id = req.params.id || null;
-        const years = await UserService.getUniqueYears(id);
-        SuccessResponse.data = years;
-        return res.status(StatusCodes.OK).json(SuccessResponse);
-    } catch (error) {
-        console.error("Error in getUniqueYears controller:", error);
-        ErrorResponse.error = error.message || "Something went wrong";
-        return res.status(StatusCodes.BAD_REQUEST).json(ErrorResponse);
-    }
-}
 
 async function destroy(req, res) {
     try {
-        const user = await UserService.deleteUser({
+        const user = await BidService.deleteBid({
             id:req.params.id
         });
 
@@ -77,25 +65,4 @@ async function destroy(req, res) {
 }
 
 
-async function update(req, res) {
-    try {
-        const user = await UserService.UpdateUser({
-            id:req.params.id,
-            name: req.body.name,
-            rollNo: req.body.rollNo,
-            email: req.body.email,
-            picture: req.body.picture,
-            programmEnroled: req.body.programmEnroled,
-            year: req.body.year
-        });
-
-        SuccessResponse.data = user;
-        return res.status(StatusCodes.OK).json(SuccessResponse);
-    } catch (error) {
-        console.log(error, "the error in controller");
-        ErrorResponse.error = error;
-        return res.status(StatusCodes.BAD_REQUEST).json(ErrorResponse);
-    }
-}
-
-module.exports = { createBid, allBid, getUniqueYears,destroy ,update,getBidOneDetail};
+module.exports = { createBid,allBid,destroy,getBidOneDetail};

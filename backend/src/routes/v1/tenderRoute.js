@@ -297,4 +297,46 @@ router.patch("/approve/:bidId",AuthRequestMiddleware.checkAuth,TenderController.
  */
 
 router.get("/get/:id",AuthRequestMiddleware.checkAuth,TenderController.getTenderById)
+
+
+/**
+ * @swagger
+ * /api/v1/tender/delete/{id}:
+ *   delete:
+ *     summary: Delete a tender by ID
+ *     tags: [Tenders]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: Unique identifier of the tender to delete
+ *         schema:
+ *           type: string
+ *           example: "1"
+ *     responses:
+ *       200:
+ *         description: Tender deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: "Tender deleted successfully"
+ *       400:
+ *         description: Invalid ID or bad request
+ *       401:
+ *         description: Unauthorized - Invalid or missing token
+ *       404:
+ *         description: Tender not found
+ */
+
+router.delete("/delete/:id",AuthRequestMiddleware.checkAuth,TenderController.destroy)
+
 module.exports = router;
