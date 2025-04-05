@@ -23,6 +23,18 @@ async function createBid(req, res) {
 }
 
 
+async function getBidOneDetail(req, res) {
+    try {
+      const response=await BidService.getBidByIds(req.params.id);
+      SuccessResponse.data = response;
+      return res.status(StatusCodes.CREATED).json(SuccessResponse);
+    } catch (error) {
+        console.error("Error in getUniqueYears controller:", error);
+        ErrorResponse.error = error.message || "Something went wrong";
+        return res.status(StatusCodes.BAD_REQUEST).json(ErrorResponse);
+    }
+}
+
 async function allBid(req, res) {
     try {
         const response = await BidService.getBid(req.query);
@@ -86,4 +98,4 @@ async function update(req, res) {
     }
 }
 
-module.exports = { createBid, allBid, getUniqueYears,destroy ,update};
+module.exports = { createBid, allBid, getUniqueYears,destroy ,update,getBidOneDetail};

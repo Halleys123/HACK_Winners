@@ -7,6 +7,31 @@ class BidRepository extends CrudRepository {
     super(Bid);
   }
 
+
+  async getOneBid(id) {
+    const response = await this.model.findByPk(id, {
+        include: [
+            {
+              model: TenderDetail,
+              as: "tender",
+              attributes: ["id", "title", "tenderNumber", "estimatedCost", "category"]
+            },
+            {
+              model: User,
+              as: "contractor",
+              attributes: ["id", "name", "email", "ethAddress"]
+            }
+          ]
+    });
+  
+    if (!response) {
+      throw new AppError("Not able to find the resource", StatusCodes.NOT_FOUND);
+    }
+  
+    return response;
+  }
+  
+
   async getByFilters(query) {
     const where = {};
 

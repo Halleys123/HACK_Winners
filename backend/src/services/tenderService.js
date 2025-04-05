@@ -55,6 +55,16 @@ async function getUniqueYears(id) {
     }
 }
 
+async function getTenderByIds(id) {
+    try {
+        const tender = await TenderRepo.getOneTender(id);
+        return tender;
+    } catch (error) {
+        console.error("Error in getUniqueYears:", error);
+        throw new AppError("Cannot get unique years", StatusCodes.INTERNAL_SERVER_ERROR);
+    }
+}
+
 
 async function deleteUser(data) {
     try {
@@ -97,5 +107,5 @@ async function UpdateUser(data) {
         }
     }
 }
-module.exports = { tenderCreate, getTender, getUniqueYears ,deleteUser,UpdateUser};
+module.exports = { tenderCreate, getTender, getUniqueYears ,deleteUser,UpdateUser,getTenderByIds};
 

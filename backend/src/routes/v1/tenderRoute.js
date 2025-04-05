@@ -254,4 +254,47 @@ router.get("/get", AuthRequestMiddleware.checkAuth,TenderController.allTender);
  */
 
 router.patch("/approve/:bidId",AuthRequestMiddleware.checkAuth,TenderController.approveBidAndCloseTender);
+
+
+/**
+ * @swagger
+ * /api/v1/tender/get/{id}:
+ *   get:
+ *     summary: Get a tender by ID
+ *     tags: [Tenders]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: Unique identifier of the tender
+ *         schema:
+ *           type: string
+ *           example: "1"
+ *     responses:
+ *       200:
+ *         description: Tender fetched successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: "Tender fetched successfully"
+ *                 data:
+ *                   $ref: '#/components/schemas/Tender'
+ *       400:
+ *         description: Invalid ID or bad request
+ *       401:
+ *         description: Unauthorized - Invalid or missing token
+ *       404:
+ *         description: Tender not found
+ */
+
+router.get("/get/:id",AuthRequestMiddleware.checkAuth,TenderController.getTenderById)
 module.exports = router;
