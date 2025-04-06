@@ -195,6 +195,7 @@ export default function GovBidDetails({ data, approveBid }) {
       </div>
 
       {/* if !isApproved then aprove button */}
+
       {!data.isApproved && (
         <div className='mt-4'>
           <button

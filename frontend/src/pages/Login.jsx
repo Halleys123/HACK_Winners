@@ -9,13 +9,14 @@ export default function Login() {
   const ref = useRef(null);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-
+  const [loaderText, setLoaderText] = useState('Loading... Please Wait');
   async function handleSubmit(e) {
     e.preventDefault();
     const formData = new FormData(ref.current);
     const data = Object.fromEntries(formData.entries());
     console.log(data);
     setLoading(true);
+    setLoaderText('Logging in... Please Wait');
     const response = await customFetch('/user/signIn', {
       method: 'POST',
       body: JSON.stringify(data),
@@ -23,11 +24,18 @@ export default function Login() {
         'Content-Type': 'application/json',
       },
     });
-    setLoading(false);
 
     if (!response.data.success) {
+      setLoaderText(
+        'Login Failed! Please check your credentials and try again.'
+      );
+      setTimeout(() => {
+        setLoading(false);
+      }, 2000);
       return;
     }
+
+    setLoading(false);
 
     console.log(response.data);
     localStorage.setItem('token', response.data.data.token);
@@ -42,7 +50,7 @@ export default function Login() {
 
   return (
     <AuthLayout>
-      <Loading visible={loading} text='Adding Data... Please Wait' />
+      <Loading visible={loading} text={loaderText} />
 
       <form
         onSubmit={handleSubmit}

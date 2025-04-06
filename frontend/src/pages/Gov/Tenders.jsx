@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import TenderCard from '@/components/TenderCard';
-import { PlusSquare } from 'lucide-react';
+import { PlusSquare, RefreshCcw } from 'lucide-react';
 import Popover from '@/components/Popover';
 import PopoverContent from './components/AddTender';
 import customFetch from '@/utils/Fetch';
@@ -22,9 +22,11 @@ export default function Tenders() {
 
   async function getTender() {
     setLoading(true);
+    setLoadingText('Loading Tenders... Please Wait');
     const response = await customFetch('/tender/get', null);
     setLoading(false);
     if (!response.data.success) {
+      setLoadingText('Failed to load tenders');
       return;
     }
     setTenders(response.data.data);
@@ -69,6 +71,7 @@ export default function Tenders() {
       return;
     }
     setLoadingText('Bid approved successfully');
+    setShowBidDetailsSidebar(false);
     setLoading(false);
   }
 
@@ -86,12 +89,28 @@ export default function Tenders() {
             Here you can find all the tenders available for bidding.
           </span>
         </div>
-        <PlusSquare
-          strokeWidth={1.5}
-          size={32}
-          onClick={() => setShowpopover(true)}
-          className='text-white cursor-pointer hover:text-violet-500 transition-all duration-200 ease-in-out'
-        />
+        <div className='flex flex-row gap-2'>
+          <PlusSquare
+            strokeWidth={1.5}
+            size={32}
+            onClick={() => setShowpopover(true)}
+            className='text-white cursor-pointer hover:text-violet-500 transition-all duration-200 ease-in-out'
+          />
+
+          <RefreshCcw
+            strokeWidth={1.5}
+            size={32}
+            onClick={() => {
+              setLoading(true);
+              getTender();
+            }}
+            className={`text-neutral-300 cursor-pointer transition-all duration-200 ease-in-out ${
+              loading
+                ? 'animate-spin text-violet-400 hover:text-neutral-500'
+                : 'text-neutral-400 hover:text-violet-500'
+            }`}
+          />
+        </div>
       </div>
       <HelpSidebar
         heading='How to Create a Tender'
