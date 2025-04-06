@@ -25,6 +25,7 @@ const input = {
 };
 
 const output = JSON.parse(solc.compile(JSON.stringify(input)));
+console.log(output);
 
 // Add error handling first
 if (output.errors) {
@@ -36,6 +37,6 @@ if (output.errors) {
 
 // Correct export structure
 module.exports = {
-  abi: output.contracts['Tender.sol'].Tender.abi,
-  bytecode: output.contracts['Tender.sol'].Tender.evm.bytecode.object,
+  abi: output.contracts['Tender.sol'].TenderBidAudit.abi,
+  bytecode: output.contracts['Tender.sol'].TenderBidAudit.evm.bytecode.object,
 };

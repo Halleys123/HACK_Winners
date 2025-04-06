@@ -3,6 +3,8 @@ const TenderRepo = new TenderRepository();
 const AppError = require("../utils/errors/app-error");
 const { StatusCodes } = require("http-status-codes");
 const {Enum} = require('../utils/common');
+const { json } = require("sequelize");
+const { getWeb3Data } = require("../web3Service");
 
 
 async function tenderCreate(data) {
@@ -11,7 +13,17 @@ async function tenderCreate(data) {
         // if (!allowedRoles.includes(data.role)) {
         //   throw new AppError(`Invalid role. Must be one of: ${allowedRoles.join(', ')}`, StatusCodes.BAD_REQUEST);
         // }
+
+        const { web3, contract, accounts } = getWeb3Data();
+
+        if (!contract || !accounts) {
+          throw new AppError("Blockchain not initialized", StatusCodes.INTERNAL_SERVER_ERROR);
+        }
+
         const tender = await TenderRepo.create(data);
+        const tenderHash=web3.utils.keccak256(web3.utils.toHex(json.toString(tender)));
+        await contract.methods.createTender(tender.id, tenderHash).send({ from: accounts[0] });
+
         return tender;
     } catch (error) {
         console.log("The error in the service", error.message);
