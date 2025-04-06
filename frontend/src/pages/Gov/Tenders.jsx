@@ -120,7 +120,11 @@ export default function Tenders() {
         <GovBidDetails approveBid={approveBid} data={bidDetails} />
       </HelpSidebar>
       <Popover close={() => setShowpopover(false)} visible={showPopover}>
-        <PopoverContent />
+        <PopoverContent
+          handleClose={() => {
+            setShowpopover(false);
+          }}
+        />
       </Popover>
       <Popover
         className={'max-w-5xl min-h-none'}

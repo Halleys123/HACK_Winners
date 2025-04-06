@@ -14,7 +14,7 @@ const categoryOptions = [
 ];
 const currencyOptions = ['INR', 'USD', 'EUR', 'GBP'];
 const statusOptions = ['Open', 'Closed', 'Under Review'];
-export default function PopoverContent() {
+export default function PopoverContent({ handleClose = () => {} }) {
   const ref = useRef(null);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState('null');
@@ -30,13 +30,15 @@ export default function PopoverContent() {
       body: JSON.stringify(data),
     });
     setLoading(false);
-    if (!response.data.data.success) {
-      setSuccess('fail');
-      return;
+    console.log(response.data.success);
+    if (!response.data.success) {
+      setSuccess('failed');
+    } else {
+      setSuccess('success');
     }
-    setSuccess('success');
     setTimeout(() => {
       setSuccess('null');
+      handleClose();
     }, 2000);
   }
 
