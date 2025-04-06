@@ -40,7 +40,7 @@ export default async function customFetch(
   };
 
   try {
-    const url = import.meta.env.VITE_BACKEND + endpoint;
+    const url = 'https://hack-winners.onrender.com/api/v1' + endpoint;
     const request = await fetch(url, option);
     const data = await request.json();
     response = {

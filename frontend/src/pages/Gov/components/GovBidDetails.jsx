@@ -9,7 +9,7 @@ export default function GovBidDetails({ data, approveBid }) {
     );
   }
   return (
-    <div className='bg-neutral-900 rounded-lg p-6 max-w-full h-full overflow-auto'>
+    <div className='bg-neutral-900 rounded-lg p-2 max-w-full h-full overflow-auto'>
       {/* Header with approval status */}
       <div className='flex justify-between items-center mb-6 border-b border-neutral-700 pb-4'>
         <h2 className='text-2xl font-bold text-white'>Bid Details</h2>

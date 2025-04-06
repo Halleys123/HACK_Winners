@@ -7,8 +7,6 @@ export default function AuthLayout({ children }) {
   const cols = 4;
   const rows = 5;
 
-  console.log(import.meta.env.VITE_BACKEND);
-
   return (
     <div className='flex flex-row h-screen w-full overflow-hidden p-6 gap-6'>
       <div className='relative bg-neutral-900 w-full flex flex-col gap-4 flex-4/3 rounded-xl overflow-hidden'>
