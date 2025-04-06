@@ -1,4 +1,4 @@
-# Corruption-Free Contracts: A Transparent Tender Management System
+# Corruption-Free Tenders: A Transparent Tender Bidding System
 
 > **Tagline:** _Powering a corruption-free and transparent government procurement system using blockchain._
 
