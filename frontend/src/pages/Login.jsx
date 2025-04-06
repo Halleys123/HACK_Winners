@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import AuthLayout from '../Layouts/AuthLayout';
 import AuthInput from '@/components/Inputs/AuthInput';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import customFetch from '@/utils/Fetch';
 import Loading from '@/components/Loading';
 
@@ -84,6 +84,16 @@ export default function Login() {
           >
             Sign In
           </button>
+          <span className='text-sm text-neutral-500 font-redhat'>
+            Don't have an account?{' '}
+            <NavLink
+              to='/signup'
+              end
+              className='text-violet-400 hover:text-violet-500 font-medium'
+            >
+              Sign Up
+            </NavLink>
+          </span>
         </div>
       </form>
     </AuthLayout>
