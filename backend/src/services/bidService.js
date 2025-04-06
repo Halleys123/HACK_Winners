@@ -21,7 +21,7 @@ async function bidCreate(data) {
         }
         const bid = await BidRepo.create(data);
 
-        const bidHash=web3.utils.keccak256(web3.utils.toHex(json.toString(bid)));
+        const bidHash=web3.utils.keccak256(web3.utils.toHex(JSON.stringify(bid)));
         await contract.methods.submitBid(bid.id, bidHash).send({ from: accounts[1] });
 
 
