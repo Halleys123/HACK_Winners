@@ -2,6 +2,22 @@
 
 > **Tagline:** _Powering a corruption-free and transparent government procurement system using blockchain._
 
+<svg width="100%" height="120" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="purple" />
+      <stop offset="100%" stop-color="orange" />
+    </linearGradient>
+  </defs>
+  <text x="50%" y="40%" dominant-baseline="middle" text-anchor="middle" font-size="30" font-family="Arial" fill="url(#grad)">
+    HACK 5.0 Winning Project
+  </text>
+  <text x="50%" y="80%" dominant-baseline="middle" text-anchor="middle" font-size="24" font-family="Arial" fill="url(#grad)">
+    Track Blockchain
+  </text>
+</svg>
+
+
 ## Overview
 
 India’s public procurement process, especially in infrastructure and logistics, often suffers from corruption, lack of transparency, and bid manipulation. Our project leverages **blockchain technology** to build a transparent, tamper-proof, and auditable system for managing government tenders.
