@@ -21,7 +21,7 @@ async function tenderCreate(data) {
         }
 
         const tender = await TenderRepo.create(data);
-        const tenderHash=web3.utils.keccak256(web3.utils.toHex(json.toString(tender)));
+        const tenderHash=web3.utils.keccak256(web3.utils.toHex(JSON.stringify(tender)));
         await contract.methods.createTender(tender.id, tenderHash).send({ from: accounts[0] });
 
         return tender;
