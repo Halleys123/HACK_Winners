@@ -132,9 +132,6 @@ export default function Tenders() {
             <span className='text-lg text-white font-semibold'>
               Biddings on Current Tender
             </span>
-            <span className='text-sm text-neutral-400'>
-              Showing {tenders.length} entries
-            </span>
           </div>
 
           <div className='overflow-x-auto'>
