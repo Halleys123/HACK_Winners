@@ -52,4 +52,4 @@ Our project addresses this by offering a **decentralized and auditable tender sy
 
 We **emit events** and store **minimal hashes** to keep the blockchain usage lightweight while storing detailed tender data in our off-chain backend.
 
----
+----
